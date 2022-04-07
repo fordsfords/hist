@@ -1,11 +1,11 @@
-# hist - fast histogramner
+# hist - fast histogrammer
 
 This histogrammer was developed to analyze software timings.
 But it could be used for almost anything.
 
 ## TABLE OF CONTENTS
 
-- [hist - fast histogramner](#hist---fast-histogramner)
+- [hist - fast histogrammer](#hist---fast-histogrammer)
   - [TABLE OF CONTENTS](#table-of-contents)
   - [COPYRIGHT AND LICENSE](#copyright-and-license)
   - [REPOSITORY](#repository)
