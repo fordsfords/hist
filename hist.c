@@ -18,24 +18,31 @@ To contact me, Steve Ford, project owner, you can find my email address
 at http://geeky-boy.com.  Can't see it?  Keep looking.
 */
 
-#include "cprt.h"
 #include <stdio.h>
 #include <string.h>
+#include <inttypes.h>
 #if ! defined(_WIN32)
   #include <stdlib.h>
   #include <unistd.h>
 #endif
 
-#include "cprt.h"
 #include "hist.h"
 
 
 hist_t *hist_create(int size)
 {
   hist_t *hist = NULL;
-  CPRT_ENULL(hist = (hist_t *)malloc(size * sizeof(hist_t)));
+  hist = (hist_t *)malloc(size * sizeof(hist_t));
+  if (hist == NULL) {
+    return NULL;
+  }
 
-  CPRT_ENULL(hist->buckets = (uint64_t *)malloc(size * sizeof(uint64_t)));
+  hist->buckets = (uint64_t *)malloc(size * sizeof(uint64_t));
+  if (hist->buckets == NULL) {
+    free(hist);
+    return NULL;
+  }
+
   hist->size = size;
 
   hist_init(hist);
@@ -46,9 +53,9 @@ hist_t *hist_create(int size)
 void hist_init(hist_t *hist)
 {
   /* Re-initialize the data. */
-  hist->min_sample = 999999999;
-  hist->max_sample = 0;
-  hist->sample_sum = 0;
+  hist->min_raw = UINT64_MAX;
+  hist->max_raw = 0;
+  hist->raw_sum = 0;
   hist->overflows = 0;  /* Number of values above the last bucket. */
   hist->num_samples = 0;
 
@@ -60,23 +67,23 @@ void hist_init(hist_t *hist)
 }  /* hist_init */
 
 
-void hist_input(hist_t *hist, uint64_t in_sample)
+void hist_input(hist_t *hist, uint64_t raw_sample, int bucket)
 {
   hist->num_samples++;
-  hist->sample_sum += in_sample;
+  hist->raw_sum += raw_sample;
 
-  if (in_sample > hist->max_sample) {
-    hist->max_sample = in_sample;
+  if (raw_sample > hist->max_raw) {
+    hist->max_raw = raw_sample;
   }
-  if (in_sample < hist->min_sample) {
-    hist->min_sample = in_sample;
+  if (raw_sample < hist->min_raw) {
+    hist->min_raw = raw_sample;
   }
 
-  if (in_sample >= hist->size) {
+  if (bucket >= hist->size) {
     hist->overflows++;
   }
   else {
-    hist->buckets[in_sample]++;
+    hist->buckets[bucket]++;
   }
 }  /* hist_input */
 

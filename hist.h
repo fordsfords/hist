@@ -26,20 +26,20 @@ at http://geeky-boy.com.  Can't see it?  Keep looking.
 /* Histogram. */
 struct hist_s {
   uint64_t *buckets;
-  uint64_t min_sample;
-  uint64_t max_sample;
-  uint64_t sample_sum;
-  uint32_t size;  /* Number of buckets. */
-  uint32_t overflows;  /* Number of values above the last bucket. */
-  uint32_t num_samples;
+  uint64_t min_raw;
+  uint64_t max_raw;
+  uint64_t raw_sum;
+  int size;  /* Number of buckets. */
+  int overflows;  /* Number of values above the last bucket. */
+  int num_samples;
 };
 typedef struct hist_s hist_t;
 
 
 hist_t *hist_create(int size);
-void hist_init(hist_t *hist);
-void hist_input(hist_t *hist, uint64_t in_sample);
-void hist_print(hist_t *hist);
+void hist_init(hist_t *hist);  /* Clear a histogram. */
+void hist_input(hist_t *hist, uint64_t raw_sample, int bucket);
+void hist_print(hist_t *hist);  /* Print to stdout the buckets. */
 void hist_delete(hist_t *hist);
 
 #ifdef __cplusplus
