@@ -68,6 +68,7 @@ int main(int argc, char **argv)
   for (i = 0; i < 1000000; i++) {
     uint64_t rdtsc1, rdtsc2;
     RDTSC(rdtsc1);
+    /* You can put code in here that you want to measure. */
     RDTSC(rdtsc2);
 
     hist_input(hist, (rdtsc2 - rdtsc1), (rdtsc2 - rdtsc1) / 4);
