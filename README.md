@@ -5,9 +5,19 @@ But it could be used for almost anything.
 
 # Table of contents
 
+- [hist - fast histogramner](#hist---fast-histogramner)
+- [Table of contents](#table-of-contents)
+- [COPYRIGHT AND LICENSE](#copyright-and-license)
+- [REPOSITORY](#repository)
+- [DEPENDENCIES](#dependencies)
+- [INTRODUCTION](#introduction)
+- [USAGE](#usage)
+- [TEST PROGRAM](#test-program)
+- [MEASUREMENTS](#measurements)
+
 <sup>(table of contents from https://luciopaiva.com/markdown-toc/)</sup>
 
-## COPYRIGHT AND LICENSE
+# COPYRIGHT AND LICENSE
 
 I want there to be NO barriers to using this code, so I am releasing it to the public domain.
 But "public domain" does not have an internationally agreed-upon definition, so I use CC0:
@@ -26,18 +36,18 @@ is https://github.com/fordsfords/hist
 To contact me, Steve Ford, project owner, you can find my email address
 at http://geeky-boy.com.  Can't see it?  Keep looking.
 
-## REPOSITORY
+# REPOSITORY
 
 See https://github.com/fordsfords/hist for code and documentation.
 
-## DEPENDENCIES
+# DEPENDENCIES
 
 The core module (hist.c) does not depend on other modules.
 
 However, the "hist_test.c" example program depends on:
 * https://github.com/fordsfords/rdtsc - for high-resolution timestamps.
 
-## INTRODUCTION
+# INTRODUCTION
 
 I wrote this simple histogrammer to analyze software timings.
 But there isn't anything in the code that assumes the recorded values are times.
@@ -63,7 +73,7 @@ of the histogram.
 Values at "size" and above are counted, and contribute to the average,
 but are not bucketed.
 
-## USAGE
+# USAGE
 
 The hist.c module contains a structure and four API functions
 (from hist.h):
@@ -102,7 +112,7 @@ The "funct_time_ns/1000" calculates the bucket number.
 
 The min, max, and sum are based on the non-bucketed "raw" values.
 
-## TEST PROGRAM
+# TEST PROGRAM
 
 The "hist_test.c" program is intended to demonstrate its use,
 and measure the cost of using it.
@@ -127,7 +137,7 @@ This gets rid of the quantization errors of rdtsc.
 But the min, max, and average are calculated on the raw tick counts,
 which can be converted to nanoseconds using "rdtsc_ticks_per_sec".
 
-## RESULTS
+# MEASUREMENTS
 
 I ran the example program as follows:
 ````
